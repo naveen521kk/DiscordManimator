@@ -18,8 +18,8 @@ jobs:
           USERNAME: ${{ github.actor }}
       - name: Build image
         run: |
-          docker build --tag ghcr.io/manimcommunity/discordmanimator:latest .
+          docker build --tag ghcr.io/naveen521kk/discordmanimator:latest .
       - name: Deploy image
-        if: (github.repository == 'ManimCommunity/DiscordManimator' && github.event_name == 'push' && github.ref == 'refs/heads/master')
+        if: (github.repository == 'naveen521kk/DiscordManimator' && github.event_name == 'push' && github.ref == 'refs/heads/master')
         run: |
-          docker push ghcr.io/manimcommunity/discordmanimator:latest
+          docker push ghcr.io/naveen521kk/discordmanimator:latest
