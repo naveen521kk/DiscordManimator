@@ -1,0 +1,26 @@
+name: build
+
+on: [push, pull_request, workflow_dispatch]
+
+jobs:
+  deploy:
+    permissions:
+      contents: read
+      packages: write
+    needs: [test]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Log in
+        run: |
+          echo "$TOKEN" | docker login ghcr.io --username "$USERNAME" --password-stdin
+        env:
+          TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          USERNAME: ${{ github.actor }}
+      - name: Build image
+        run: |
+          docker build --tag ghcr.io/ManimCommunity/DiscordManimator:latest .
+      - name: Deploy image
+        if: (github.repository == 'ManimCommunity/DiscordManimator' && github.event_name == 'push' && github.ref == 'refs/heads/master')
+        run: |
+          docker push ghcr.io/ManimCommunity/DiscordManimator:latest
