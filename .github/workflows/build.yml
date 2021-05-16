@@ -7,7 +7,6 @@ jobs:
     permissions:
       contents: read
       packages: write
-    needs: [test]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -19,8 +18,8 @@ jobs:
           USERNAME: ${{ github.actor }}
       - name: Build image
         run: |
-          docker build --tag ghcr.io/ManimCommunity/DiscordManimator:latest .
+          docker build --tag ghcr.io/manimcommunity/discordmanimator:latest .
       - name: Deploy image
         if: (github.repository == 'ManimCommunity/DiscordManimator' && github.event_name == 'push' && github.ref == 'refs/heads/master')
         run: |
-          docker push ghcr.io/ManimCommunity/DiscordManimator:latest
+          docker push ghcr.io/manimcommunity/discordmanimator:latest
